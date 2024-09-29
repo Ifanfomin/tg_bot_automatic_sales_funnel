@@ -1,6 +1,5 @@
-aiogram==2.14.3
-SQLAlchemy
+aiogram==2.22.2
 psycopg2-binary
 python-dotenv
-sqlalchemy[asyncio]
-asyncpg
+# sqlalchemy[asyncio]
+# asyncpg
