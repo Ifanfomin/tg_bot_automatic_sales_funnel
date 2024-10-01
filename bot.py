@@ -3,9 +3,9 @@ import logging
 import os
 from dotenv import load_dotenv
 
-from app.handlers.common import register_handlers_common
-from app.handlers.registration import register_handlers_registration
-from app.handlers.admin import register_handlers_admin
+from bot.Handlers.common import register_handlers_common
+from bot.Handlers.registration import register_handlers_registration
+from bot.Handlers.admin import register_handlers_admin
 
 from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand

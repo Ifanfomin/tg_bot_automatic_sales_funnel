@@ -1,7 +1,7 @@
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
-from app.database.connecting import cursor, conn
+from bot.Services.Database.connecting import cursor, conn
 
 
 

@@ -1,8 +1,6 @@
-from aiogram import Bot, Dispatcher, types
-from aiogram.dispatcher import FSMContext
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram import Dispatcher, types
 from aiogram.dispatcher.filters import IDFilter
-from app.database.connecting import cursor, conn
+from bot.Services.Database.connecting import cursor
 
 
 async def show_database(message: types.Message):
