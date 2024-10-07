@@ -4,8 +4,8 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.contrib.middlewares.environment import EnvironmentMiddleware
 
-from bot.Middleware.db import DatabaseMiddleware
-from bot.Middleware.role_middleware import RoleMiddleware
+from bot.Middlewares.db import DatabaseMiddleware
+from bot.Middlewares.role_middleware import RoleMiddleware
 from bot.Keyboards.commands import set_commands
 from bot.Utils.Database.db import session
 from bot.config import config
@@ -46,7 +46,8 @@ dp.middleware.setup(DatabaseMiddleware(session=session))
 # set_commands(bot)
 
 # Регистрация хендлеров
-from bot.Handlers.Common_handlers.register_handlers import register_handlers
+from bot.Handlers.common import register_common_handlers
+from bot.Handlers.user import register_user_handlers
 
-register_handlers(dp)
-# Assistant_handlers.register_handlers_task_creation(dp)
+register_common_handlers.register_handlers(dp)
+register_user_handlers.register_handlers(dp)
