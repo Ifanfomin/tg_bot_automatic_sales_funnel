@@ -2,7 +2,7 @@ from aiogram import Bot
 from aiogram.types import BotCommand
 
 
-async def set_commands(bot: Bot):
+def set_commands(bot: Bot):
     commands = [
         BotCommand(command="/menu", description="Вернуться в меню"),
         BotCommand(command="/profile", description="Посмотреть профиль"),
@@ -11,4 +11,4 @@ async def set_commands(bot: Bot):
         BotCommand(command="/register", description="Начать Регистрацию")
     ]
 
-    await bot.set_my_commands(commands)
+    bot.set_my_commands(commands)
