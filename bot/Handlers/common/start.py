@@ -1,5 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
+from aiohttp.web_middlewares import middleware
 
 from bot.Utils.Database.requests import Database
 from bot.Keyboards.common import user_menu_keyboard
@@ -19,10 +20,12 @@ async def cmd_start(message: types.Message, role: str, db: Database , state: FSM
     )
 
     if role == "user":
-        await message.answer("Привет!\n"
-                             "Здесь ты можешь покупать игры\n"
-                             "Быть в курсе скидок\n"
-                             "И игровых новостей!", reply_markup=user_menu_keyboard()["keyboard"])
+        await message.answer_photo(
+            photo="https://github.com/Ifanfomin/tg_bot_automatic_sales_funnel/blob/master/imgs/widht_logo.jpg?raw=true",
+            caption="Привет!\n"
+                     "Здесь ты можешь покупать игры\n"
+                     "Быть в курсе скидок\n"
+                     "И игровых новостей!", reply_markup=user_menu_keyboard())
     elif role == "admin":
         ...
 
