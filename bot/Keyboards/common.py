@@ -1,13 +1,13 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 def user_menu_keyboard():
-    keyboard = ReplyKeyboardMarkup(resize_keyboard=True)  # , one_time_keyboard=True
+    keyboard = InlineKeyboardMarkup()
     buttons = [
         "Список игр",
         "Игровые новости"
     ]
     keyboard.add(
-        *[KeyboardButton(text) for text in buttons]
+        *[InlineKeyboardButton(text=text, callback_data=text) for text in buttons]
     )
 
-    return {"keyboard": keyboard, "buttons": buttons}
+    return keyboard

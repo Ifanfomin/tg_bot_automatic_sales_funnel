@@ -1,7 +1,7 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 
 def take_game_type_keyboard():
-    keyboard = ReplyKeyboardMarkup(resize_keyboard=True)  # , one_time_keyboard=True
+    keyboard = InlineKeyboardMarkup()
     buttons = [
         "Топ популярных игр",
         "Головоломки",
@@ -12,21 +12,22 @@ def take_game_type_keyboard():
     ]
 
     keyboard.add(
-        *[KeyboardButton(text) for text in buttons]
+        *[InlineKeyboardButton(text=text, callback_data=text) for text in buttons]
     )
 
-    return {"keyboard": keyboard, "buttons": buttons}
+    return keyboard
 
 
-def game_list_search_keyboard():
-    keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
+def game_prev_next_keyboard():
+    keyboard = InlineKeyboardMarkup()
     buttons = [
         "Предыдущая",
         "Категории",
         "Следующая"
     ]
+
     keyboard.add(
-        *[KeyboardButton(text) for text in buttons]
+        *[InlineKeyboardButton(text=text, callback_data=text) for text in buttons]
     )
 
-    return {"keyboard": keyboard, "buttons": buttons}
+    return keyboard
