@@ -1,10 +1,8 @@
-from collections.abc import Callable
-from typing import Dict, Any, Awaitable
+from typing import Dict
 
 from aiogram.dispatcher.middlewares import BaseMiddleware
-from aiogram.types.base import TelegramObject
-from aiogram.types import Message
-# from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
+from aiogram import types
+
 from sqlalchemy.orm import sessionmaker, Session
 
 from bot.Utils.Database.requests import Database
@@ -15,7 +13,12 @@ class DatabaseMiddleware(BaseMiddleware):
         super(DatabaseMiddleware, self).__init__()
         self.session = session
 
-    async def on_process_message(self, message: Message, data: Dict):
+    async def on_process_message(self, message: types.Message, data: Dict):
+        with self.session() as session:
+            db = Database(session=session)
+            data["db"] = db
+
+    async def on_process_callback_query(self, call: types.CallbackQuery, data: Dict):
         with self.session() as session:
             db = Database(session=session)
             data["db"] = db

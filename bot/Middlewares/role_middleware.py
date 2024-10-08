@@ -21,6 +21,7 @@ class RoleMiddleware(BaseMiddleware):
         else:
             data['role'] = 'user'
 
+
 # Пример использования в хендлерах
 # async def admin_only_command(message: Message, role: str):
 #     if role == 'admin':
