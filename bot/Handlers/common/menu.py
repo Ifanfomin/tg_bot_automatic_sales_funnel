@@ -1,15 +1,22 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
+from aiogram.types import InputMediaPhoto
 
-from bot.Utils.Database.requests import Database
-from bot.Keyboards.common import user_menu_keyboard
+from bot.Keyboards.Inline.common import user_menu_keyboard
 
 
-async def cmd_menu(message: types.Message, role: str, db: Database , state: FSMContext):
+async def cmd_menu(call: types.CallbackQuery, role: str, state: FSMContext):
     await state.finish()
 
     if role == "user":
-        await message.answer("Вы вернулись в меню\n"
-                             "Выберите одну из опций:", reply_markup=user_menu_keyboard()["keyboard"])
+        photo = InputMediaPhoto(
+            "https://github.com/Ifanfomin/tg_bot_automatic_sales_funnel/blob/master/imgs/widht_logo.jpg?raw=true")
+        await call.message.edit_media(media=photo)
+        await call.message.edit_caption(
+            "Привет!\n"
+                 "Здесь ты можешь покупать игры\n"
+                 "Быть в курсе скидок\n"
+                 "И игровых новостей!", reply_markup=user_menu_keyboard()
+        )
     elif role == "admin":
         ...

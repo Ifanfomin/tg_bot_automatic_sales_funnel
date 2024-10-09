@@ -22,6 +22,22 @@ class RoleMiddleware(BaseMiddleware):
             data['role'] = 'user'
 
 
+    async def on_process_callback_query(self, message: Message, data: dict):
+        user_id = message.from_user.id
+
+        # Проверка, является ли пользователь администратором
+        if str(user_id) in config.ADMINS:
+            data['role'] = 'admin'
+        # Проверка, является ли пользователь ассистентом
+        elif str(user_id) in config.ASSISTANTS:
+            data['role'] = 'assistant'
+        # Если пользователь не является ни администратором, ни ассистентом, он считается простым пользователем
+        elif str(user_id) in config.SUPER_USERS:
+            data['role'] = 'super_users'
+        else:
+            data['role'] = 'user'
+
+
 # Пример использования в хендлерах
 # async def admin_only_command(message: Message, role: str):
 #     if role == 'admin':

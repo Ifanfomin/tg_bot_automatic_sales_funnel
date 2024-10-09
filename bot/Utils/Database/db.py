@@ -34,7 +34,7 @@ games = Table(
     Column("image", Text()),
     Column("name", Text()),
     Column("developer", Text()),
-    Column("price", Integer()),
+    Column("price", Text()),
     Column("genre", Text()),
     Column("date", Text()),  # DD.MM.YYYY
     Column("alone", Text()),

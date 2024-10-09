@@ -4,7 +4,15 @@ from aiogram.types import InputMediaPhoto
 
 from bot.Utils.Database.requests import Database
 from bot.States.user.take_game_type import WatchGamesListStates
-from bot.Keyboards.user import take_game_type_keyboard, game_prev_next_keyboard
+from bot.Keyboards.Inline.user import take_game_type_keyboard, game_prev_next_keyboard
+
+
+async def take_game_type(call: types.CallbackQuery, state: FSMContext):
+    await state.set_state(WatchGamesListStates.waiting_take_game_type.state)
+
+    photo = InputMediaPhoto("https://github.com/Ifanfomin/tg_bot_automatic_sales_funnel/blob/master/imgs/widht_logo.jpg?raw=true")
+    await call.message.edit_media(media=photo)
+    await call.message.edit_caption("Выбери интересующий жанр:", reply_markup=take_game_type_keyboard())
 
 
 async def show_game(call: types.CallbackQuery, game_id: int, db: Database):
@@ -28,18 +36,36 @@ async def show_game(call: types.CallbackQuery, game_id: int, db: Database):
         reply_markup=game_prev_next_keyboard()
     )
 
-async def take_game_type(call: types.CallbackQuery, state: FSMContext):
-    await state.set_state(WatchGamesListStates.waiting_take_game_type.state)
 
-    await call.message.edit_caption("Выбери интересующий жанр:", reply_markup=take_game_type_keyboard())
+async def watch_next_game(call: types.CallbackQuery, db: Database, state: FSMContext):
+    async with state.proxy() as data:
+        if data["id_index"] + 1 < len(data["games_ids"]):
+            data["id_index"] += 1
+            await show_game(
+                call,
+                data["games_ids"][data["id_index"]],
+                db
+            )
+
+
+async def watch_prev_game(call: types.CallbackQuery, db: Database, state: FSMContext):
+    async with state.proxy() as data:
+        if data["id_index"] - 1 > -1:
+            data["id_index"] -= 1
+            await show_game(
+                call,
+                data["games_ids"][data["id_index"]],
+                db
+            )
 
 
 async def start_watch_games_list(call: types.CallbackQuery, db: Database, state: FSMContext):
+    await state.set_state(WatchGamesListStates.waiting_watch_games.state)
+
     async with state.proxy() as data:
         data["genre"] = call.data
         data["id_index"] = 0
         data["games_ids"] = await db.get_games_ids(data["genre"])
-        print(data["games_ids"])
         await show_game(
             call,
             data["games_ids"][data["id_index"]],

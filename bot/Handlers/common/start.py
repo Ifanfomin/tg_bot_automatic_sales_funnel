@@ -1,9 +1,8 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-from aiohttp.web_middlewares import middleware
 
 from bot.Utils.Database.requests import Database
-from bot.Keyboards.common import user_menu_keyboard
+from bot.Keyboards.Inline.common import user_menu_keyboard
 
 
 async def cmd_start(message: types.Message, role: str, db: Database , state: FSMContext):
