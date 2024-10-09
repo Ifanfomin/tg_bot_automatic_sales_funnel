@@ -23,7 +23,7 @@ class Game(Base):
     image: Mapped[str]
     name: Mapped[str]
     developer: Mapped[str]
-    price: Mapped[int]
+    price: Mapped[str]
     genre: Mapped[str]
     date: Mapped[str]
     alone: Mapped[str]

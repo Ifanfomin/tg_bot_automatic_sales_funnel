@@ -1,11 +1,8 @@
-from os import write
-
 from bot.Utils.Database.models import User, Game
 from bot.Utils.Database.db import users, games
 
-# from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Session
-from sqlalchemy import delete, and_, select
+from sqlalchemy import select
 
 
 class Database:
@@ -13,7 +10,6 @@ class Database:
         self.session = session
 
     async def add_user(self, user_id: str, username: str, name: str) -> None:
-        # user = await self.session.get(Users, user_id)
         with self.session as session:
             query = select(users).filter_by(user_id=user_id)
             user = session.execute(query).all()
@@ -35,11 +31,17 @@ class Database:
     ):
         with self.session as session:
             if genre == "Топ популярных игр":
-                query = select(Game.id)
+                query = select(Game.id, Game.popularity)
+                ls = session.execute(query).all()
+                print(ls)
+                ls = sorted(ls, key=lambda x: x[1], reverse=True)
+                print(ls)
+                ids = [d[0] for d in ls]
             else:
                 query = select(Game.id).filter_by(genre=genre)
-            ids = session.execute(query).all()
-            ids = [i[0] for i in ids]
+                ids = session.execute(query).all()
+                ids = [i[0] for i in ids]
+            print("ids", ids)
             return ids
 
     async def get_game_info(
