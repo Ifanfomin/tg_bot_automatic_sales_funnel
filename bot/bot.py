@@ -6,6 +6,8 @@ from aiogram.contrib.middlewares.environment import EnvironmentMiddleware
 
 from bot.Middlewares.db import DatabaseMiddleware
 from bot.Middlewares.role_middleware import RoleMiddleware
+from bot.Middlewares.parse_news import ParseNewsMiddleware
+
 from bot.Keyboards.commands import set_commands
 from bot.Utils.Database.db import session
 from bot.config import config
@@ -41,6 +43,9 @@ dp.middleware.setup(RoleMiddleware())
 
 # Модлварь для БД
 dp.middleware.setup(DatabaseMiddleware(session=session))
+
+# Мидлварь для парсинга новостей
+dp.middleware.setup(ParseNewsMiddleware())
 
 # Создание меню команд
 # set_commands(bot)
