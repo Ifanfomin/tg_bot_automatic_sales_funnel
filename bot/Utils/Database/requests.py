@@ -1,3 +1,5 @@
+from requests import session
+
 from bot.Utils.Database.models import User, Game
 from bot.Utils.Database.db import users, games
 
@@ -53,3 +55,11 @@ class Database:
             game_info = session.execute(query).one()
 
             return game_info
+    
+    async def get_news_ids(self):
+        with self.session as session:
+            query = select(News.id)
+            ids = session.execute(query).all()
+            ids = [i[0] for i in ids]
+
+            return ids
