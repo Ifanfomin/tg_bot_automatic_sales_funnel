@@ -4,7 +4,7 @@ from aiogram.types import InputMediaPhoto
 
 from bot.Utils.Database.requests import Database
 from bot.States.user.take_game_type import WatchGamesListStates
-from bot.Keyboards.Inline.user import take_game_type_keyboard, game_prev_next_keyboard
+from bot.Keyboards.Inline.user.watch_games_list_keyboards import take_game_type_keyboard, game_prev_next_keyboard
 
 
 async def take_game_type(call: types.CallbackQuery, state: FSMContext):
